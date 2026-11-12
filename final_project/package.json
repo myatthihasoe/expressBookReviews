@@ -1,19 +1,28 @@
 {
   "name": "bookshop",
   "version": "1.0.1",
-  "description": "",
+  "description": "RESTful online book review service",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "node --check index.js && node --check router/general.js && node --check router/auth_users.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "books",
+    "reviews"
+  ],
+  "author": "Myat Thiha Soe",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.1",
-    "express-session": "^1.17.3",
-    "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.19"
+    "axios": "1.21.1",
+    "express": "4.22.3",
+    "express-session": "1.19.0",
+    "jsonwebtoken": "9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.14"
   }
 }
