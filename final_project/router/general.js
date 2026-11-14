@@ -87,28 +87,57 @@ publicUsers.get("/review/:isbn", (req, res) => {
 
 // The following four Axios methods demonstrate asynchronous access with
 // async/await and Promise callbacks, as required by the final project rubric.
+const describeAxiosError = (error) => {
+  const status = error.response?.status;
+  const detail = error.response?.data?.message || error.message || "Unknown error";
+  return status ? `${detail} (HTTP ${status})` : detail;
+};
+
 const getAllBooks = async () => {
-  const response = await axios.get(`${API_BASE_URL}/`);
-  return response.data;
+  try {
+    const response = await axios.get(`${API_BASE_URL}/`);
+    return response.data;
+  } catch (error) {
+    const message = `Failed to retrieve all books: ${describeAxiosError(error)}`;
+    console.error(message);
+    throw new Error(message);
+  }
 };
 
 const getBookByISBN = (isbn) =>
   axios
     .get(`${API_BASE_URL}/isbn/${encodeURIComponent(isbn)}`)
-    .then((response) => response.data);
+    .then((response) => response.data)
+    .catch((error) => {
+      const message = `Failed to retrieve book by ISBN: ${describeAxiosError(error)}`;
+      console.error(message);
+      throw new Error(message);
+    });
 
 const getBooksByAuthor = async (author) => {
-  const response = await axios.get(
-    `${API_BASE_URL}/author/${encodeURIComponent(author)}`
-  );
-  return response.data;
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/author/${encodeURIComponent(author)}`
+    );
+    return response.data;
+  } catch (error) {
+    const message = `Failed to retrieve books by author: ${describeAxiosError(error)}`;
+    console.error(message);
+    throw new Error(message);
+  }
 };
 
 const getBooksByTitle = async (title) => {
-  const response = await axios.get(
-    `${API_BASE_URL}/title/${encodeURIComponent(title)}`
-  );
-  return response.data;
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/title/${encodeURIComponent(title)}`
+    );
+    return response.data;
+  } catch (error) {
+    const message = `Failed to retrieve books by title: ${describeAxiosError(error)}`;
+    console.error(message);
+    throw new Error(message);
+  }
 };
 
 module.exports.general = publicUsers;
